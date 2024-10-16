@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+    <style>
+        /* Reset Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;  /* Flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full height for body */
+        }
+
+        /* Login Page */
+        .login-box {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px; /* Set a fixed width */
+            text-align: center; /* Center text */
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        input {
+            width: 100%; /* Full width for input fields */
+            padding: 10px;
+            margin: 10px 0; /* Space between inputs */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .btn {
+            width: 100%; /* Full width for buttons */
+            padding: 10px;
+            background-color: #f05454;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #ff7675;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+
+        a {
+            color: #007bff; /* Link color */
+            text-decoration: none; /* Remove underline */
+        }
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover */
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        .logo h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .menu {
+            list-style: none;
+        }
+
+        .menu li {
+            margin-bottom: 10px;
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: #555;
+            padding: 10px 15px;
+            display: block;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .menu a:hover,
+        .menu .active {
+            background-color: #f05454;
+            color: #fff;
+        }
+
+        /* Main Dashboard Styles */
+        .main {
+            flex: 1;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .logo-greeting-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            margin-right: 20px;
+        }
+
+        .greeting h1 {
+            font-size: 18px;
+            color: #333;
+        }
+
+        .logout-btn {
+            background-color: #f05454;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #ff7675;
+        }
+
+        /* Goal Section */
+        .goal-section {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 30px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .goal-achieved h2 {
+            font-size: 24px;
+            color: #555;
+        }
+
+        .achieved {
+            font-size: 36px;
+            color: #4caf50;
+            margin: 10px 0;
+        }
+
+        .goal-details {
+            text-align: left;
+        }
+
+        .btn {
+            background-color: #f05454;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: block;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #ff7675;
+        }
+
+        .expired {
+            color: red;
+            margin: 10px 0;
+        }
+
+        .referral-code span {
+            font-weight: bold;
+        }
+
+        .share-btn {
+            margin-top: 20px;
+            background-color: #25D366;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .share-btn:hover {
+            background-color: #1ebc59;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Page -->
+    <div id="login-page" class="login-box">
+        <h2>Login</h2>
+        <form id="login-form">
+            <input type="text" placeholder="Username" required id="username-input">
+            <input type="password" placeholder="Password" required>
+            <button type="submit" class="btn">Login</button>
+            <p>Don't have an account? <a href="#" id="register-link">Register Here</a></p>
+        </form>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="container" style="display: none;">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo" onclick="navigateToDashboard()">
+                <h2>Logo</h2>
+            </div>
+            <ul class="menu">
+                <li><a href="#" class="active" onclick="navigateTo('dashboard')">Dashboard</a></li>
+                <li><a href="#" onclick="navigateTo('transactions')">Transactions</a></li>
+                <li><a href="#" onclick="navigateTo('start-here')">Start Here</a></li>
+                <li><a href="#" onclick="navigateTo('faq')">FAQ</a></li>
+                <li><a href="#" onclick="navigateTo('learning-modules')">Learning Modules</a></li>
+                <li><a href="#" onclick="navigateTo('rewards')">Rewards</a></li>
+                <li><a href="#" onclick="navigateTo('feedback')">Feedback</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Dashboard -->
+        <div class="main">
+            <header class="header">
+                <div class="user-info">
+                    <div class="logo-greeting-container">
+                        <div class="logo" onclick="navigateToDashboard()">
+                            
+                        </div>
+                        <div class="greeting">
+                            <h1>Hello <span id="user-name"></span>,</h1> <!-- Display username here -->
+                        </div>
+                    </div>
+                    <button class="logout-btn" onclick="logout()">Logout</button>
+                </div>
+            </header>
+
+            <section class="dashboard-content">
+                <div class="greeting">
+                    <p>Initial push is the toughest! Go through the learning modules, or reach out to your fundraising manager to level up.</p>
+                </div>
+
+                <div class="goal-section">
+                    <div class="goal-achieved">
+                        <h2>Goal Achieved</h2>
+                        <p class="achieved">10</p>
+                        <p>Total Goal: ₹30,000</p>
+                    </div>
+
+                    <div class="goal-details">
+                        <h3>Level Achieved: Star</h3>
+                        <button class="btn">Rewards</button>
+                        <button id="copy-link" class="btn">Copy Donation Link</button>
+
+                        <p>Unlock Ninja Level at 5000</p>
+                        <p class="expired">Time Left: Campaign Expired</p>
+
+                        <div class="referral-code">
+                            <p>Reference Code: <span id="referral-code">pra7432</span></p>
+                        </div>
+
+                        <button class="btn start-here">Start Here</button>
+                    </div>
+                </div>
+
+                <button id="share-whatsapp" class="share-btn">Share on WhatsApp</button>
+            </section>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to handle login
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get the username from the input field
+            const username = document.getElementById('username-input').value;
+
+            // Check if the username is not empty
+            if (username.trim() !== "") {
+                // Set the username in the dashboard
+                document.getElementById('user-name').textContent = username; 
+
+                // Hide the login page and show the dashboard
+                document.getElementById('login-page').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'flex'; // Ensure it displays as a flex container
+            } else {
+                alert("Please enter a valid username!");
+            }
+        });
+
+        // Function to logout
+        function logout() {
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('login-page').style.display = 'block';
+            document.getElementById('username-input').value = ''; // Clear the username input
+        }
+
+        // Function to navigate to different sections
+        function navigateTo(section) {
+            alert(`Navigating to ${section}`);
+            // Implement section navigation logic here
+            // For demonstration, we are just showing an alert
+        }
+
+        // Function to navigate to the dashboard
+        function navigateToDashboard() {
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('login-page').style.display = 'none';
+        }
+
+        // Optional: Link to registration logic
+        document.getElementById('register-link').addEventListener('click', function() {
+            alert('Registration page functionality goes here!');
+            // Redirect to registration page or display registration form
+        });
+    </script>
+</body>
+</html>
